@@ -1,13 +1,14 @@
 <?php
 
-namespace Rules;
+namespace Sunder\Validator\Rules;
 
 use Sunder\Validator\Contracts\Rule;
 
-class StringRule implements Rule
+class IntRule implements Rule
 {
+
     public function validate(mixed $data): bool
     {
-        return is_string($data);
+        return is_int($data);
     }
 }

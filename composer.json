@@ -6,11 +6,6 @@
             "Sunder\\Validator\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Rules\\": "tests/rules"
-        }
-    },
     "authors": [
         {
             "name": "SunderShadow",
