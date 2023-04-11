@@ -8,6 +8,8 @@ use Sunder\Validator\Contracts\Validator as ValidatorContract;
 
 class Validator implements ValidatorContract
 {
+    const KEY_SEPARATOR = '.';
+
     /** @var Rule[] $rules */
     public function __construct(
         private readonly array $rules
@@ -16,9 +18,19 @@ class Validator implements ValidatorContract
 
     public function validate(array $data): ValidationResult
     {
+
         $failedFields = [];
         foreach ($this->rules as $key => $rule) {
-            if (!isset($data[$key]) || !$this->validateSingle($rule, $data[$key])) {
+            $dataToValidate = $data;
+            foreach (explode(self::KEY_SEPARATOR, $key) as $keyPart) {
+                if (!isset($dataToValidate)) {
+                    $failedFields[] = $key;
+                    continue;
+                }
+                $dataToValidate = $dataToValidate[$keyPart];
+            }
+
+            if (!$this->validateSingle($rule, $dataToValidate)) {
                 $failedFields[] = $key;
             }
         }
